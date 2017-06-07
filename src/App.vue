@@ -9,7 +9,7 @@
           :class="{
             'viewing-map': viewingMap,
             }">
-        <div v-if="!searchResults.length" class="no-results">
+        <div v-if="!searchResults.length && searchQuery" class="no-results">
           Sorry! Nothing found!
         </div>
         <div class="result-item" v-else
@@ -47,6 +47,18 @@
         </div>
 
         <div class="no-results">
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
+          <br/>
           Search results powered by OneMap
 
           <div class="icon-attributions">
