@@ -12,7 +12,7 @@
           :class="{
             'viewing-map': viewingMap,
             }">
-        <div v-if="!searchResults.length && searchQuery" class="no-results">
+        <div v-if="!searchResults.length && validQuery && searchQuery && !inFlight" class="no-results">
           Sorry! Nothing found!
         </div>
         <div class="result-item" v-else
@@ -31,7 +31,7 @@
                   </a>
                 </td>
               </tr>
-              <tr>
+              <tr v-if="v.ROAD_NAME !== 'NIL'">
                 <th>Road Name</th>
                 <td>{{v.ROAD_NAME}}</td>
               </tr>
@@ -39,7 +39,7 @@
                 <th>Building.</th>
                 <td>{{v.BUILDING}}</td>
               </tr>
-              <tr>
+              <tr v-if="v.POSTAL !== 'NIL'">
                 <th>Postal Code</th>
                 <td>{{v.POSTAL}}</td>
               </tr>
@@ -100,6 +100,7 @@ export default {
       searchResults: [],
       mapCenter: {lat:1.38, lng:103.8},
       mapZoom: 14,
+      inFlight: false,
       viewingMap: false,
       mapOptions: {
         mapTypeControl: false,
@@ -109,6 +110,9 @@ export default {
   computed: {
     gmapsHref () {
       return `https://www.google.com/maps/search/?api=1&query=${this.mapCenter.lat},${this.mapCenter.lng}`
+    },
+    validQuery () {
+      return this.searchQuery.length === 6 || !/^[0-9]+$/.test(this.searchQuery)
     }
   },
   mounted() {
@@ -116,7 +120,8 @@ export default {
   },
   methods: {
     updateResults: _.throttle(function () {
-      if (this.searchQuery) {
+      if (this.validQuery) {
+        this.inFlight = true;
         axios.get(`https://developers.onemap.sg/commonapi/search?` + querystring.stringify({
           searchVal: this.searchQuery,
           returnGeom: 'Y',
@@ -124,6 +129,7 @@ export default {
         }))
         .then((response) => {
           this.searchResults = response.data.results;
+          this.inFlight = false;
         })
       } else {
         this.searchResults = []
@@ -262,6 +268,7 @@ body {
       border: solid 0.5px black;
       font-size: 120%;
       text-decoration: none;
+      box-shadow: 0 0 1em rgba(0,0,0,0.5);
     }
   }
 }
