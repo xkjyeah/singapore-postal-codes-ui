@@ -1,0 +1,22 @@
+{
+  "short_name": "SG Postal Codes",
+  "name": "SG Postal Codes",
+  "icons": [
+    {
+      "src": "./assets/icon48.ico",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "./assets/icon96.ico",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "./assets/icon192.ico",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "start_url": "index.html?launcher=true"
+}
