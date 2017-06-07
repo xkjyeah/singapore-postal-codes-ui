@@ -1,8 +1,11 @@
 <template>
   <div id="app">
     <div class="search-box">
-      <input type="tel" v-model="searchQuery" placeholder="Search here!"
-        @input="updateResults"/>
+        <input type="tel" v-model="searchQuery" placeholder="Search here!"
+          @input="updateResults" ref="searchQueryBox"/>
+        <button @click="searchQuery = '', $refs.searchQueryBox.focus()" v-show="searchQuery" class="clear-query-button">
+          x
+        </button>
     </div>
     <div class="search-results">
       <div class="search-list" @click="viewingMap = false"
@@ -164,13 +167,25 @@ body {
 
   .search-box {
     flex: 0 0 auto;
+    display: flex;
+    flex-direction: row;
+    border: solid 1px #888;
+    border-radius: 0.5em;
+    background-color: #FFF;
+    padding: 0.5em;
 
     input {
       box-sizing: border-box;
-      padding: 0.5em;
-      width: 100%;
+      flex: 1 0 auto;
       font-size: 150%;
       font-family: monospace;
+      background-color: #FFF;
+      border: none;
+      overflow: hidden;
+    }
+    .clear-query-button {
+      border: none;
+      background-color: #FFF;
     }
   }
 
