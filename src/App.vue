@@ -70,6 +70,14 @@
       <gmap-map class="search-map" :center="mapCenter" :zoom="mapZoom"
         ref="searchMap" @zoom_changed="mapZoom = $event" :options="mapOptions">
         <gmap-marker :position="mapCenter" />
+
+        <div slot="visible">
+          <div class="show-in-maps">
+            <a class="button" :href="gmapsHref" target="_blank">
+              Show in Maps
+            </a>
+          </div>
+        </div>
       </gmap-map>
     </div>
   </div>
@@ -93,6 +101,11 @@ export default {
       mapOptions: {
         mapTypeControl: false,
       }
+    }
+  },
+  computed: {
+    gmapsHref () {
+      return `https://www.google.com/maps/search/?api=1&query=${this.mapCenter.lat},${this.mapCenter.lng}`
     }
   },
   mounted() {
@@ -215,6 +228,25 @@ body {
           }
         }
       }
+    }
+  }
+  .show-in-maps {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    position: absolute;
+    left: 0; right: 0;
+    bottom: 1em;
+
+    .button {
+      flex: 0 0 auto;
+      padding: 0.5em 2em;
+      display: block;
+      background: #69F;
+      color: #000;
+      border: solid 0.5px black;
+      font-size: 120%;
+      text-decoration: none;
     }
   }
 }
