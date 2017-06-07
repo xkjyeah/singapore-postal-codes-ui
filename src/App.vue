@@ -120,6 +120,7 @@ export default {
   },
   methods: {
     updateResults: _.throttle(function () {
+      this.viewingMap = false
       if (this.validQuery) {
         this.inFlight = true;
         axios.get(`https://developers.onemap.sg/commonapi/search?` + querystring.stringify({
